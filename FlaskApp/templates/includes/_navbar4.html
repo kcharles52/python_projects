@@ -20,12 +20,21 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+            {% if session.logged_in %}
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">Dashboad</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">LogOut</a>
+            </li>
+            {% else %}
             <li class="nav-item">
                 <a class="nav-link" href="/register">Register</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/login">Login</a>
             </li>
+            {% endif%}
         </ul>
     </div>
 </nav>
