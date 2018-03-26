@@ -3,6 +3,7 @@ from data import Articles
 from flask_mysqldb import MySQL
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from passlib.hash import sha256_crypt
+from functools import wraps
 
 app = Flask(__name__)
 
@@ -23,6 +24,7 @@ Articles = Articles()
 def send_js(path):
     return send_from_directory('js',path) """
 
+#index
 @app.route('/')
 def index():
     return render_template('home.html')
@@ -118,7 +120,26 @@ def login():
             return render_template('login.html',error=error)
 
     return render_template('login.html')
+#check if user is logged in
+def is_logged_in(f):
+    @wrap(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('Unauthorized, Please login', 'danger')
+            return redirect(url_for('login'))
+    return wrap
 
+
+#logout
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('you are now logged out', 'success')
+    return redirect(url_for('login'))
+
+#Dashboard
 @app.route('/dashboard')
 def dashboard():
     return render_template('dashboard.html')
