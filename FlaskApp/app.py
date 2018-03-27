@@ -253,8 +253,9 @@ def edit_article(id):
 
         return redirect(url_for('dashboard'))
     return render_template('edit_article.html',form=form)
+
 #delete article
-@app.route('/delete_article/<string:id>', method=['post'])
+@app.route('/delete_article/<string:id>', methods=['POST'])
 @is_logged_in
 def delete_article(id):
     #create cursor
