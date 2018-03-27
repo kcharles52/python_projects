@@ -58,7 +58,7 @@ def article(id):
     cur =mysql.connection.cursor()
 
     #retrive articles
-    result = cur.execute("SELECT * FROM articles WHERE id= %s", [id])
+    cur.execute("SELECT * FROM articles WHERE id= %s", [id])
 
     article = cur.fetchone()
 
