@@ -134,6 +134,7 @@ def is_logged_in(f):
 
 #logout
 @app.route('/logout')
+@is_logged_in
 def logout():
     session.clear()
     flash('you are now logged out', 'success')
@@ -141,9 +142,39 @@ def logout():
 
 #Dashboard
 @app.route('/dashboard')
+@is_logged_in
 def dashboard():
     return render_template('dashboard.html')
 
+class ArticleForm(Form):
+    title = StringField('Title', [validators.Length(min=1,max=200)])
+    body = TextAreaField('Body',[validators.Length(min=30)])
+
+#Add article
+@app.route('/Add_article', methods=['POST','GET'])
+@is_logged_in
+def Add_article():
+    form = ArticleForm(request.form)
+    if request.method == 'POST' and form.validate():
+        title = form.tittle.data
+        body = form.body.data
+
+        #create cursor
+        cur = mysql.connection.cursor()
+
+        #excute
+        cur.execute("INSERT INTO articles (title, body, author) VALUES(%s, %s, %s)", (title, body, session['username']))
+
+        #commit to DB
+        mysql.connection.commit()
+
+        #close connection
+        cur.close()
+
+        flash('Article has been created', 'success')
+
+        return redirect(url_for('dashboard'))
+    return render_template('add_article.html',form=form)
 
 
 if __name__ =='__main__':
