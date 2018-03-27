@@ -214,6 +214,45 @@ def Add_article():
         return redirect(url_for('dashboard'))
     return render_template('add_article.html',form=form)
 
+#Edit article
+@app.route('/edit_article/<string:id>', methods=['POST','GET'])
+@is_logged_in
+def edit_article(id):
+    #create cursor
+    cur = mysql.connection.cursor()
+
+    #get article by id
+    cur.execute("SELECT * FROM articles WHERE id =%s", [id])
+
+    article = cur.fetchone()
+
+    #get form
+    form = ArticleForm(request.form)
+
+    #Populate form
+    form.title.data = article['title']
+    form.body.data = article['body']
+
+    if request.method == 'POST' and form.validate():
+        title = request.form['title']
+        body = request.form['body']
+
+        #create cursor
+        cur = mysql.connection.cursor()
+
+        #excute
+        cur.execute("UPDATE articles SET title=%s, body=%s WHERE id=%s", (title, body, id))
+
+        #commit to DB
+        mysql.connection.commit()
+
+        #close connection
+        cur.close()
+
+        flash('Article Updated', 'success')
+
+        return redirect(url_for('dashboard'))
+    return render_template('edit_article.html',form=form)
 
 if __name__ =='__main__':
     app.secret_key='mykey123'
