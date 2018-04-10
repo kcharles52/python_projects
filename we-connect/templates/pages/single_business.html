@@ -1,0 +1,35 @@
+{% extends 'layouts/main.html' %} {% block title %} Single Business {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8">
+            <h1>{{business.title}} </h1>
+            <p>About this busienss: {{business.body}} </p>
+            
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <img src="{{url_for('static',filename='img/weconnect.jpg')}}" alt="Business Photo" class="img-thumbnail">
+        <p>Category: Business category</p>
+        </div>
+        
+    </div>
+    <div class="row">
+        <!-- review form-->
+        <div class="col-md-8">
+            <p>Business Review</p>
+            <textarea name="review" id="review" cols="80" rows="10" placeholder="Review this business"></textarea>
+            
+
+        </div>
+        <div class="col-md-4">
+            <a href="#" class="btn btn-primary {% if session.logged_in %}{% else %}disabled{% endif %} ">Edit</a>
+            <a href="#" class="btn btn-danger {% if session.logged_in %}{% else %}disabled{% endif %}">Delete</a>
+        </div>
+    </div>
+
+</div>
+
+
+
+{% endblock %}

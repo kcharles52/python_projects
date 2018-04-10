@@ -1,0 +1,59 @@
+<nav class="gtco-nav sticky-banner" role="navigation">
+    <div class="gtco-container">
+
+        <div class="row">
+            <div class="col-md-9 col-xs-12  menu-1">
+                <ul>
+                    <li class="active">
+                        <a href="/">Home</a>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="/businesses">Businesses</a>
+                        <ul class="dropdown">
+                            <li>
+                                <a href="#">Branding</a>
+                            </li>
+                            <li>
+                                <a href="#">Development</a>
+                            </li>
+                            <li>
+                                <a href="#">Web Design</a>
+                            </li>
+                            <li>
+                                <a href="#">Marketing</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="portfolio.html">Portfolio</a>
+                    </li>
+                    <li>
+                        <a href="blog.html">Blog</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-md-3">
+                <ul class="loginmenu">
+                    {% if session.logged_in %}
+                    <li>
+                        <a href="{{url_for('logout')}}">LogOut</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{{url_for('register')}}">Signup</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('login')}}">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</nav>
