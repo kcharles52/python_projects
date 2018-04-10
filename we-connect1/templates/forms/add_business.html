@@ -1,0 +1,17 @@
+{% extends 'layouts/main.html' %}
+{% block title %} Add Business {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Create a business using this page </h1>
+
+    {% from 'includes/_formhelpers.html' import render_field %}
+    <form action="" method="post">
+        <p>Fill in the details of the business to be registered on this platform</p>
+        <div class="form-group">{{render_field(form.title, class_="form-control", required=true, autofocus=true)}} </div>
+        <div class="form-group">{{render_field(form.textarea, class_="form-control", required =True)}} </div>
+        <input type="submit" value="Submit" class="btn btn-primary">
+    </form>
+</div>
+
+{% endblock %}
