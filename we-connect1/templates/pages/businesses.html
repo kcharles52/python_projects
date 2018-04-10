@@ -1,0 +1,32 @@
+{% extends 'layouts/main.html'  %}
+{% block title %} Businesses {% endblock %}
+{% block content %}
+<div class="container">
+    <p class="lead">List of businesses and their categories</p>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for business in businesses %}
+        <tr>
+            <td>
+                <a href="single_business/{{business.id}}">{{business.title}}</a>
+            </td>
+            <td>{{business.body}} </td>
+            <td>
+                <a href="edit_business/{{business.id}} " class="btn btn-default pull-right {% if session.logged_in %} {%  else %} disabled {% endif %}">Edit</a>
+            </td>
+            <td> Delete</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+       
+
+
+{% endblock %}
